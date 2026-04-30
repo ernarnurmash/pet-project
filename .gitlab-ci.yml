@@ -1,5 +1,6 @@
 stages:
   - deploy
+  - monitoring
 
 deploy:
   stage: deploy
@@ -10,7 +11,6 @@ deploy:
     - echo $KUBECONFIG_B64 | base64 -d > /tmp/kubeconfig
     - export KUBECONFIG=/tmp/kubeconfig
   script:
-    - kubectl get nodes
     - kubectl apply -f nginx/nginx-deployment.yaml
     - kubectl apply -f nginx/nginx-service.yaml
     - kubectl apply -f postgres/postgres-secret.yaml
@@ -20,5 +20,24 @@ deploy:
     - kubectl apply -f backend/backend-deployment.yaml
     - kubectl apply -f backend/backend-service.yaml
     - kubectl apply -f ingress/ingress.yaml
+  only:
+    - main
+
+monitoring:
+  stage: monitoring
+  tags:
+    - k8s
+  image: alpine/helm:latest
+  before_script:
+    - echo $KUBECONFIG_B64 | base64 -d > /tmp/kubeconfig
+    - export KUBECONFIG=/tmp/kubeconfig
+  script:
+    - helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+    - helm repo update
+    - helm upgrade --install monitoring prometheus-community/kube-prometheus-stack
+      --namespace monitoring
+      --create-namespace
+      --set grafana.adminPassword=admin123
+      --set prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues=false
   only:
     - main
