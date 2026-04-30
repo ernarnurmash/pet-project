@@ -3,6 +3,8 @@ stages:
 
 deploy:
   stage: deploy
+  tags:
+    - k8s
   image: bitnami/kubectl:latest
   before_script:
     - echo $KUBECONFIG_B64 | base64 -d > /tmp/kubeconfig
