@@ -1,0 +1,18 @@
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  image: bitnami/kubectl:latest
+  script:
+    - kubectl apply -f nginx/nginx-deployment.yaml
+    - kubectl apply -f nginx/nginx-service.yaml
+    - kubectl apply -f postgres/postgres-secret.yaml
+    - kubectl apply -f postgres/postgres-deployment.yaml
+    - kubectl apply -f postgres/postgres-service.yaml
+    - kubectl apply -f backend/backend-configmap.yaml
+    - kubectl apply -f backend/backend-deployment.yaml
+    - kubectl apply -f backend/backend-service.yaml
+    - kubectl apply -f ingress/ingress.yaml
+  only:
+    - main
