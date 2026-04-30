@@ -4,7 +4,11 @@ stages:
 deploy:
   stage: deploy
   image: bitnami/kubectl:latest
+  before_script:
+    - echo $KUBECONFIG_B64 | base64 -d > /tmp/kubeconfig
+    - export KUBECONFIG=/tmp/kubeconfig
   script:
+    - kubectl get nodes
     - kubectl apply -f nginx/nginx-deployment.yaml
     - kubectl apply -f nginx/nginx-service.yaml
     - kubectl apply -f postgres/postgres-secret.yaml
