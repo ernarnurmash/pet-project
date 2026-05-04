@@ -15,9 +15,6 @@ Deployed a production-ready Kubernetes infrastructure for an e-commerce microser
 
 ---
 
-## 🏗️ Architecture
----
-
 ## ⚙️ Stack
 
 | Component | Technology |
@@ -44,25 +41,26 @@ Deployed a production-ready Kubernetes infrastructure for an e-commerce microser
 ### 2. Microservices & CI/CD
 - Deployed **11 microservices** (Google Online Boutique)
 - Written **Helm chart** for loadgenerator with ConfigMap
-- GitLab CI/CD pipeline with 3 stages:
-  - build — Docker image with git SHA tag
-  - push — GitLab Container Registry
-  - deploy — Helm deploy to Kubernetes
+- GitLab CI/CD pipeline with 3 stages: build, push, deploy
+- Kubeconfig stored securely in GitLab Secrets
 
 ### 3. Monitoring
 - Prometheus + Grafana dashboards
-- CPU & Memory per pod/namespace
+- CPU and Memory usage per pod/namespace
 
 ### 4. Logging
 - Loki + Promtail for centralized log collection
 - Logs visible in Grafana Explore
 
 ### 5. Auto-scaling
-- HPA for frontend: scales 1→10 replicas at CPU > 50%
+- HPA for frontend: scales 1 to 10 replicas at CPU > 50%
 
 ---
 
 ## 🔄 CI/CD Pipeline
+
+git push → GitLab CI → docker build → push to Registry → helm deploy → Kubernetes
+
 ---
 
 ## 👨‍💻 Author
