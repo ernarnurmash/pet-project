@@ -1,6 +1,6 @@
 # 🚀 Kubernetes Infrastructure Platform
 
-> Production-grade Kubernetes cluster with full observability stack, CI/CD pipeline, and auto-scaling.
+> Production-grade Kubernetes кластер с полным стеком наблюдаемости, CI/CD пайплайном и автомасштабированием.
 
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-1.29-326CE5?logo=kubernetes&logoColor=white)
 ![GitLab CI](https://img.shields.io/badge/GitLab_CI-CD-FC6D26?logo=gitlab&logoColor=white)
@@ -9,60 +9,64 @@
 
 ---
 
-## 📋 Overview
+## 📋 Описание
 
-Deployed a production-ready Kubernetes infrastructure for an e-commerce microservices platform. Migrated from Docker Compose on bare-metal to a fully orchestrated Kubernetes cluster with monitoring, logging, and auto-scaling.
+Развернул production-ready Kubernetes инфраструктуру для платформы электронной коммерции (аналог Ozon/AliExpress). Выполнил миграцию с Docker Compose на bare-metal серверах на полностью оркестрированный Kubernetes кластер с мониторингом, логированием и автомасштабированием.
 
 ---
 
-## ⚙️ Stack
+## ⚙️ Стек технологий
 
-| Component | Technology |
+| Компонент | Технология |
 |-----------|-----------|
-| Container Orchestration | Kubernetes 1.29 |
-| Cluster Topology | 3 control-plane + 1 worker |
+| Оркестрация контейнеров | Kubernetes 1.29 |
+| Топология кластера | 3 control-plane + 1 worker |
 | Ingress | NGINX Ingress Controller |
 | CI/CD | GitLab CI/CD |
-| Package Manager | Helm 3 |
-| Monitoring | Prometheus + Grafana |
-| Logging | Loki + Promtail |
-| Auto-scaling | HorizontalPodAutoscaler |
+| Пакетный менеджер | Helm 3 |
+| Мониторинг | Prometheus + Grafana |
+| Логирование | Loki + Promtail |
+| Автомасштабирование | HorizontalPodAutoscaler |
 | Container Registry | GitLab Container Registry |
 
 ---
 
-## ✅ What Was Done
+## ✅ Что было сделано
 
-### 1. Kubernetes Cluster
-- Deployed HA cluster: **3 control-plane nodes + 1 worker**
-- Configured NGINX Ingress Controller
-- All nodes in Ready state
+### 1. Kubernetes кластер
+- Развернул HA кластер: **3 control-plane ноды + 1 worker**
+- Настроил NGINX Ingress Controller
+- Все ноды в статусе Ready
 
-### 2. Microservices & CI/CD
-- Deployed **11 microservices** (Google Online Boutique)
-- Written **Helm chart** for loadgenerator with ConfigMap
-- GitLab CI/CD pipeline with 3 stages: build, push, deploy
-- Kubeconfig stored securely in GitLab Secrets
+### 2. Микросервисы и CI/CD
+- Развернул **11 микросервисов** (Google Online Boutique)
+- Написал **Helm chart** для сервиса loadgenerator с ConfigMap для переменных окружения
+- Настроил GitLab CI/CD пайплайн с 3 стадиями:
+  - `build` — сборка Docker образа с тегом git SHA
+  - `push` — загрузка в GitLab Container Registry
+  - `deploy` — деплой через Helm в Kubernetes
+- Kubeconfig хранится в GitLab Secrets (не в коде)
 
-### 3. Monitoring
-- Prometheus + Grafana dashboards
-- CPU and Memory usage per pod/namespace
+### 3. Мониторинг
+- Развернул Prometheus + Grafana
+- Настроил дашборды: CPU и Memory по каждому поду и namespace
 
-### 4. Logging
-- Loki + Promtail for centralized log collection
-- Logs visible in Grafana Explore
+### 4. Логирование
+- Развернул Loki + Promtail для централизованного сбора логов
+- Логи всех микросервисов доступны в Grafana Explore
 
-### 5. Auto-scaling
-- HPA for frontend: scales 1 to 10 replicas at CPU > 50%
-
----
-
-## 🔄 CI/CD Pipeline
-
-git push → GitLab CI → docker build → push to Registry → helm deploy → Kubernetes
+### 5. Автомасштабирование
+- Настроил HPA для сервиса frontend
+- Масштабируется от 1 до 10 реплик при CPU > 50%
 
 ---
 
-## 👨‍💻 Author
+## 🔄 CI/CD пайплайн
+
+git push → GitLab CI → docker build → push в Registry → helm deploy → Kubernetes
+
+---
+
+## 👨‍💻 Автор
 
 **Ернар Нурмаш** — Junior DevOps Engineer
