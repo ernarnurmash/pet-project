@@ -51,6 +51,6 @@ mirror-to-github:
     - apk add --no-cache git
   script:
     - git remote add github https://ernarnurmash:${GITHUB_TOKEN}@github.com/ernarnurmash/pet-project.git
-    - git push --mirror github
+    - git push github HEAD:main --force
   only:
     - main
