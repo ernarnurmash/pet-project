@@ -1,6 +1,7 @@
 stages:
   - deploy
   - monitoring
+  - mirror
 
 deploy:
   stage: deploy
@@ -39,5 +40,14 @@ monitoring:
       --create-namespace
       --set grafana.adminPassword=admin123
       --set prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues=false
+  only:
+    - main
+
+mirror-to-github:
+  stage: mirror
+  image: alpine/git:latest
+  script:
+    - git remote add github https://ernarnurmash:${GITHUB_TOKEN}@github.com/ernarnurmash/pet-project.git
+    - git push --mirror github
   only:
     - main
