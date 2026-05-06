@@ -46,6 +46,7 @@ monitoring:
 mirror-to-github:
   stage: mirror
   image: alpine/git:latest
+  needs: []
   script:
     - git remote add github https://ernarnurmash:${GITHUB_TOKEN}@github.com/ernarnurmash/pet-project.git
     - git push --mirror github
