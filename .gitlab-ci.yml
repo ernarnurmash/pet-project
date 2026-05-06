@@ -45,8 +45,10 @@ monitoring:
 
 mirror-to-github:
   stage: mirror
-  image: alpine/git:latest
+  image: alpine:latest
   needs: []
+  before_script:
+    - apk add --no-cache git
   script:
     - git remote add github https://ernarnurmash:${GITHUB_TOKEN}@github.com/ernarnurmash/pet-project.git
     - git push --mirror github
